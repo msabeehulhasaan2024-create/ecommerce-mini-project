@@ -48,8 +48,11 @@ const createOrder = async (req, res) => {
     const savedOrder = await order.save();
     res.status(201).json(savedOrder);
   } catch (error) {
-    console.error('Error creating order:', error);
-    res.status(500).json({ message: error.message || 'Server error while creating order.' });
+    console.error('Error in createOrder controller:', error);
+    res.status(500).json({
+      message: error.message || 'Server error while creating order.',
+      error: error.message,
+    });
   }
 };
 
@@ -61,8 +64,11 @@ const getMyOrders = async (req, res) => {
     const orders = await Order.find({ userId: req.user._id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
-    console.error('Error fetching user orders:', error);
-    res.status(500).json({ message: 'Server error while fetching your orders.' });
+    console.error('Error in getMyOrders controller:', error);
+    res.status(500).json({
+      message: 'Server error while fetching your orders.',
+      error: error.message,
+    });
   }
 };
 
@@ -76,8 +82,11 @@ const getOrders = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
-    console.error('Error fetching all orders:', error);
-    res.status(500).json({ message: 'Server error while fetching all orders.' });
+    console.error('Error in getOrders controller:', error);
+    res.status(500).json({
+      message: 'Server error while fetching all orders.',
+      error: error.message,
+    });
   }
 };
 
@@ -102,8 +111,11 @@ const updateOrderStatus = async (req, res) => {
     const updatedOrder = await order.save();
     res.json(updatedOrder);
   } catch (error) {
-    console.error('Error updating order status:', error);
-    res.status(500).json({ message: 'Server error while updating order status.' });
+    console.error(`Error in updateOrderStatus controller for ID ${req.params.id}:`, error);
+    res.status(500).json({
+      message: 'Server error while updating order status.',
+      error: error.message,
+    });
   }
 };
 

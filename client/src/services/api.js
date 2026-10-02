@@ -1,14 +1,27 @@
 import axios from 'axios';
 
+// Central API URL configuration
+export const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').trim().replace(/\/+$/, '');
+
+// Ensure baseURL ends with /api cleanly without duplicate slashes
+export const API_BASE_URL = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// Automatically inject JWT token into requests if user is logged in
+// Automatically inject JWT token into requests and normalize leading slashes
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  if (config.url) {
+    // Ensure relative endpoint starts with single slash
+    config.url = config.url.replace(/^\/+/, '/');
   }
   return config;
 });

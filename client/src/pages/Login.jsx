@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff, AlertCircle, ShieldAlert, UserCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import API from '../services/api';
+import API, { API_URL } from '../services/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ export default function Login() {
       const msg =
         err.response?.data?.message ||
         (err.code === 'ERR_NETWORK'
-          ? 'Cannot connect to backend server. Ensure backend is running.'
+          ? `Cannot connect to backend server at ${API_URL}. Ensure backend is running and CORS is configured.`
           : 'Invalid email or password. Please try again.');
       setError(msg);
     } finally {

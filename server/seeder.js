@@ -1,5 +1,9 @@
-const dns = require('dns');
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+try {
+  const dns = require('dns');
+  dns.setServers(['1.1.1.1', '8.8.8.8']);
+} catch (e) {
+  // Ignore DNS override errors
+}
 
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');

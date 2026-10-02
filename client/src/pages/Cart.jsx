@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import API from '../services/api';
+import API, { API_URL } from '../services/api';
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, totalPrice, clearCart } = useCart();
@@ -82,7 +82,7 @@ export default function Cart() {
       if (err.response?.status === 401) {
         setErrorMsg('Your session has expired. Please sign in again from the Login page to complete your order.');
       } else if (err.code === 'ERR_NETWORK') {
-        setErrorMsg('Network error: Cannot communicate with the server at http://localhost:5000.');
+        setErrorMsg(`Network error: Cannot communicate with the server at ${API_URL}.`);
       } else {
         setErrorMsg(err.response?.data?.message || 'Could not place order. Please try again.');
       }

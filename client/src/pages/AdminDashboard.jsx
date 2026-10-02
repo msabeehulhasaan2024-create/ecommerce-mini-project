@@ -466,7 +466,7 @@ export default function AdminDashboard() {
               </div>
 
               {/* Status filter & refresh */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div className="admin-header-actions" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <Filter size={15} className="text-muted" />
                   <select

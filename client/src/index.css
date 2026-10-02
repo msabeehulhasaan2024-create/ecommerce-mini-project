@@ -52,6 +52,7 @@
   padding: 0;
 }
 
+html,
 body {
   font-family: var(--font-main);
   background-color: var(--bg-page);
@@ -59,6 +60,9 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Root Layout */
@@ -66,6 +70,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .main-content {
@@ -74,6 +80,18 @@ body {
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 20px 16px 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 16px 12px 40px;
+  }
 }
 
 .page-container {

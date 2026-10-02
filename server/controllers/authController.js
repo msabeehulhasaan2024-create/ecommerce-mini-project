@@ -52,8 +52,11 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user data provided.' });
     }
   } catch (error) {
-    console.error('Registration Error:', error);
-    return res.status(500).json({ message: error.message || 'Server error during registration.' });
+    console.error('Error in registerUser controller:', error);
+    return res.status(500).json({
+      message: error.message || 'Server error during registration.',
+      error: error.message,
+    });
   }
 };
 
@@ -96,8 +99,11 @@ const loginUser = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error('Login Error:', error);
-    return res.status(500).json({ message: error.message || 'Server error during login.' });
+    console.error('Error in loginUser controller:', error);
+    return res.status(500).json({
+      message: error.message || 'Server error during login.',
+      error: error.message,
+    });
   }
 };
 
@@ -109,7 +115,11 @@ const getMe = async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error in getMe controller:', error);
+    res.status(500).json({
+      message: error.message || 'Server error fetching user profile.',
+      error: error.message,
+    });
   }
 };
 

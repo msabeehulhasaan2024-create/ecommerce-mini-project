@@ -8,8 +8,11 @@ const getProducts = async (req, res) => {
     const products = await Product.find({}).sort({ createdAt: -1 });
     res.json(products);
   } catch (error) {
-    console.error('Error fetching products:', error);
-    res.status(500).json({ message: 'Server error while fetching products.' });
+    console.error('Error in getProducts controller:', error);
+    res.status(500).json({
+      message: 'Server error while fetching products.',
+      error: error.message,
+    });
   }
 };
 
@@ -26,8 +29,11 @@ const getProductById = async (req, res) => {
       res.status(404).json({ message: 'Product not found.' });
     }
   } catch (error) {
-    console.error('Error fetching product:', error);
-    res.status(500).json({ message: 'Invalid product ID or server error.' });
+    console.error(`Error in getProductById controller for ID ${req.params.id}:`, error);
+    res.status(500).json({
+      message: 'Invalid product ID or server error.',
+      error: error.message,
+    });
   }
 };
 
@@ -55,8 +61,11 @@ const createProduct = async (req, res) => {
     const createdProduct = await product.save();
     res.status(201).json(createdProduct);
   } catch (error) {
-    console.error('Error creating product:', error);
-    res.status(500).json({ message: error.message || 'Server error while creating product.' });
+    console.error('Error in createProduct controller:', error);
+    res.status(500).json({
+      message: error.message || 'Server error while creating product.',
+      error: error.message,
+    });
   }
 };
 
@@ -80,8 +89,11 @@ const updateProduct = async (req, res) => {
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } catch (error) {
-    console.error('Error updating product:', error);
-    res.status(500).json({ message: error.message || 'Server error while updating product.' });
+    console.error(`Error in updateProduct controller for ID ${req.params.id}:`, error);
+    res.status(500).json({
+      message: error.message || 'Server error while updating product.',
+      error: error.message,
+    });
   }
 };
 
@@ -99,8 +111,11 @@ const deleteProduct = async (req, res) => {
     await Product.findByIdAndDelete(req.params.id);
     res.json({ message: 'Product successfully removed from catalog.' });
   } catch (error) {
-    console.error('Error deleting product:', error);
-    res.status(500).json({ message: 'Server error while deleting product.' });
+    console.error(`Error in deleteProduct controller for ID ${req.params.id}:`, error);
+    res.status(500).json({
+      message: 'Server error while deleting product.',
+      error: error.message,
+    });
   }
 };
 

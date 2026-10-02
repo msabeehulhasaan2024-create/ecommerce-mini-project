@@ -13,7 +13,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import API from '../services/api';
+import API, { API_URL } from '../services/api';
 
 export default function MyOrders() {
   const { user } = useAuth();
@@ -34,7 +34,7 @@ export default function MyOrders() {
       if (err.response?.status === 401) {
         setErrorMsg('Session expired or invalid login token. Please log in again.');
       } else if (err.code === 'ERR_NETWORK') {
-        setErrorMsg('Cannot reach the backend server at http://localhost:5000.');
+        setErrorMsg(`Cannot reach the backend server at ${API_URL}.`);
       } else {
         setErrorMsg('Could not fetch your orders at this time.');
       }
